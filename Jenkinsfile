@@ -62,6 +62,18 @@ pipeline {
             }
         }
     }
+     post {
+        always {
+            sh "docker rmi ${IMAGE_NAME} || true"
+            sh "docker logout || true"
+        }
+        success {
+            echo "Build and push successful: ${IMAGE_NAME}"
+        }
+        failure {
+            echo "Pipeline failed. Check the logs above."
+        }
+    }
 }
 
 
